@@ -13,20 +13,19 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { user } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
 
-  function handleLogin() {
+  async function handleLogin() {
     if (email === "" || password === "") {
       return;
     }
+
+    await signIn({ email, password });
   }
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require("../../assets/logo.png")}
-        style={styles.logo}
-      />
+      <Image source={require("../../assets/logo.png")} style={styles.logo} />
 
       <View style={styles.inputContainer}>
         <TextInput
@@ -45,10 +44,7 @@ export default function SignIn() {
           onChangeText={setPassword}
         />
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleLogin}
-        >
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Acessar</Text>
         </TouchableOpacity>
       </View>
