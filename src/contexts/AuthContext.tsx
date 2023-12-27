@@ -6,6 +6,7 @@ interface AuthContextData {
   user: UserProps;
   isAuthenticated: boolean;
   signIn: (creadentials: SignInProps) => Promise<void>;
+  signOut: () => Promise<void>;
   loadingAuth: boolean;
   loading: boolean;
 }
@@ -85,9 +86,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  async function signOut() {
+    await AsyncStorage.clear().then(() => {
+      setUser({} as UserProps);
+    });
+  }
+
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, signIn, loadingAuth, loading }}
+      value={{ user, isAuthenticated, signIn, signOut, loadingAuth, loading }}
     >
       {children}
     </AuthContext.Provider>
